@@ -30,8 +30,10 @@ Currently just creates the JSON that is fed into the GUI.
 Can be taken directly from target as a standalone binary.
 
 ## Publishing updates
-Use `dx build --features web --release` for the up to date web version before merging to main (https://dioxuslabs.com/learn/0.4/cookbook/publishing).
-The release build is drastically smaller (85 MB -> 5.2 MB), which is nicer for both GitHub and users.
+Use `optimize.bash` for the up to date web version before merging to main (https://dioxuslabs.com/learn/0.4/cookbook/publishing).
+The release build is drastically smaller (85 MB -> 2.2 MB), which is nicer for both GitHub and users.
+
+This runs `dioxus build --features web --release`, followed by `wasm-opt` with `-all` and `-Oz` to further shrink binary size.
 
 ## Graphics
 Yes, the styling is the defaults.
