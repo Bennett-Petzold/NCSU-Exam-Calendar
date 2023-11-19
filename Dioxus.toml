@@ -8,7 +8,7 @@ name = "ncsu_exam_web"
 default_platform = "web"
 
 # `build` & `serve` dist path
-out_dir = "docs"
+out_dir = "dist"
 
 # resource (public) file folder
 asset_dir = "public"
