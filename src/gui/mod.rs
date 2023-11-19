@@ -1,3 +1,15 @@
+/*
+* Copyright (C) 2023 Bennett Petzold
+*
+* This file is part of ncsu_exam_calendar.
+*
+* ncsu_exam_calendar is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
+*
+* ncsu_exam_calendar is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along with ncsu_exam_calendar. If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #![cfg(feature = "dioxus")]
 
 use std::ops::Range;
@@ -68,6 +80,8 @@ async fn load_default_map() -> Result<CalendarMap> {
 }
 
 pub fn app(cx: Scope) -> Element {
+    let version = "v".to_string() + option_env!("CARGO_PKG_VERSION").unwrap_or("UNKNOWN");
+
     use_shared_state_provider(cx, || {
         Builder::new_current_thread()
             .build()
@@ -82,7 +96,7 @@ pub fn app(cx: Scope) -> Element {
 
     cx.render(rsx! {
         h1 {
-            "ACCURACY NOT GUARANTEED OR IMPLIED."
+            "ABSOLUTELY NO WARRANTY"
         },
         source_select {},
         br {},
@@ -96,7 +110,7 @@ pub fn app(cx: Scope) -> Element {
         br {},
         br {},
         i {
-        "v0.1"
+            version
         }
     })
 }

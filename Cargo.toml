@@ -1,7 +1,15 @@
 [package]
 name = "ncsu_exam_calendar"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
+description = "A search tool for the NCSU exam calendar"
+
+authors = ["Bennett Petzold", "dansecob . dev @ gmail.com"]
+license = "GPL-2.0-or-later"
+license-file = "LICENSE"
+homepage = "https://bennett-petzold.github.io/NCSU-Exam-Calendar/"
+keywords = ["NCSU"]
+
 default-run = "ncsu_exam_web"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
