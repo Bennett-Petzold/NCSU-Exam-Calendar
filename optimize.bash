@@ -24,8 +24,8 @@ fi
 
 dx build --features web --release
 printf '%s\n' 'dioxus output size:'
-du -sh docs/
+du -sh dist/
 
-find ./docs -iname "*.wasm" -exec sh -c 'wasm-opt "$1" -o "$1" -all -Oz' shell {} \;
+find ./dist -iname "*.wasm" -exec sh -c 'wasm-opt "$1" -o "$1" -all -Oz' shell {} \;
 printf '%s\n' 'wasm-opt size:'
-du -sh docs/
+du -sh dist/
