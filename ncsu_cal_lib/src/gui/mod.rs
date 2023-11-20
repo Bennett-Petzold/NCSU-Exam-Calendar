@@ -18,18 +18,10 @@ use std::ops::{Deref, DerefMut};
 use anyhow::Result;
 use chrono::NaiveTime;
 use dioxus::prelude::*;
-use itertools::{iproduct, Itertools};
-use log::info;
-use log::LevelFilter;
+use itertools::Itertools;
+
 use reqwest::Client;
 use tokio::runtime::Builder;
-
-#[cfg(feature = "web")]
-use anyhow::{anyhow, bail};
-#[cfg(feature = "web")]
-use wasm_bindgen::prelude::*;
-#[cfg(feature = "web")]
-use web_sys::window;
 
 use crate::calendar::Class;
 use crate::calendar::Weekday;
@@ -524,7 +516,7 @@ fn named_classes(cx: Scope, classes: Vec<Class>) -> Element {
         return None;
     }
 
-    let owner = if let Some(choice) = class_choice.read().clone() {
+    let _owner = if let Some(choice) = class_choice.read().clone() {
         matches!(choice, Class::Name(_))
     } else {
         false
