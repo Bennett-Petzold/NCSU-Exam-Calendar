@@ -14,9 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: .github/workflows/binaries.yml
+    - uses: actions/download-artifact@v3
+      with:
+        name: x86_64-linux-ncsu_examc ${{ matrix.node-version }}
+    - uses: actions/download-artifact@v3
+      with:
+        name: x86_64-mac-ncsu_examc ${{ matrix.node-version }}
 
     - uses: AButler/upload-release-assets@v2.0
       with:
-        files: 'desktop/dist/bundle/{deb/*.deb,appimage/*.AppImage,macos/*.app,dmg/*.dmg}; target/release/*ncsu_examc'
+        files: '*'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
