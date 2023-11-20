@@ -38,7 +38,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with: 
-        name: x86_64-linux-ncsu_examc ${{ matrix.node-version }}
+        name: x86_64-linux-ncsu_examc
         path: |
           x86_64-linux-ncsu_examc
           desktop/dist/bundle/deb/*.deb
@@ -67,7 +67,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with: 
-        name: x86_64-mac-ncsu_examc ${{ matrix.node-version }}
+        name: x86_64-mac-ncsu_examc
         path: |
           x86_64-mac-ncsu_examc
           desktop/dist/bundle/macos/*.app
@@ -106,11 +106,11 @@ jobs:
     steps:
     - uses: dawidd6/action-download-artifact@v2
       with:
-        name: x86_64-linux-ncsu_examc ${{ matrix.node-version }}
+        name: x86_64-linux-ncsu_examc
 
     - uses: dawidd6/action-download-artifact@v2
       with:
-        name: x86_64-mac-ncsu_examc ${{ matrix.node-version }}
+        name: x86_64-mac-ncsu_examc
 
     - uses: AButler/upload-release-assets@v2.0
       with:
