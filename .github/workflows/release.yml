@@ -13,8 +13,6 @@ jobs:
 
     steps:
     - uses: .github/workflows/binaries.yml
-    - run: ls desktop/dist/bundle/*
-    - run: ls target/release/
 
     - uses: AButler/upload-release-assets@v2.0
       with:
