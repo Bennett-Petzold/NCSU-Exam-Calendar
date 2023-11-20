@@ -2,6 +2,7 @@ name: cargo-tag
 
 on:
   push:
+    branches: [ "main" ]
 
 jobs:
   update-tag:
