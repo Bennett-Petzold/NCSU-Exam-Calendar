@@ -3,6 +3,10 @@ name: cargo-tag
 on:
   push:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   update-tag:
     runs-on: ubuntu-latest
@@ -22,6 +26,6 @@ jobs:
         git config --global user.name 'Tag updating bot'
         git config --global user.email 'bot@noreply.github.com'
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-        VERSION=$(cargo metadata --format-version 1 | jq '.packages.[] | select(.name == "ncsu_cal_lib")| .version' | tr -d '"')
+        VERSION="$(cargo metadata --format-version 1 | jq '.packages.[] | select(.name == "ncsu_cal_lib")| .version' | tr -d '"')"
         git tag -m '' -a v"$VERSION"
         git push origin v"$VERSION"
