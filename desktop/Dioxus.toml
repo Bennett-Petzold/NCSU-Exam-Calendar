@@ -48,6 +48,6 @@ script = []
 [bundle]
 name = "NCSU Grade Calculator"
 identifier = "io.github.Bennett-Petzold.NCSU-Grade-Calculator"
-icon = ["icons/favicon-*.png"]
+icon = ["icons/favicon-0.png", "icons/favicon-1.png", "icons/favicon-2.png", "icons/favicon-3.png", "icons/favicon-4.png", "icons/favicon-5.png"]
 copyright = "Copyright (c) Bennett Petzold 2023. GPLv2 or later."
 short_description = "A search tool for the NCSU exam calendar"
