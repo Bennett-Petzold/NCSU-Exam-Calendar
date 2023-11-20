@@ -33,4 +33,4 @@ jobs:
     - name: Build artifacts
       run: |
         cargo build -p ncsu_exam_calendar_cli --release
-        dioxus bundle --bin ncsu_exam_calendar_desktop --release
+        dx bundle --bin ncsu_exam_calendar_desktop --release
