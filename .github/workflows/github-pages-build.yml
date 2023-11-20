@@ -1,0 +1,37 @@
+name: github-pages-build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: awalsh128/cache-apt-pkgs-action@v1
+      with:
+        packages: binaryen
+
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        target: wasm32-unknown-unknown
+    - uses: Swatinem/rust-cache@v2
+
+    - name: Download dependencies
+      run: |
+        cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
+
+    - name: Build artifacts
+      run: |
+        web/optimize.bash
+        mv web/dist/ _site/
+
+    - uses: actions/upload-pages-artifact@v2

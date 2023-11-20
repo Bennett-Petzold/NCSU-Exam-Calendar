@@ -4,6 +4,21 @@ set -eo pipefail
 
 cd "$(dirname "$0")"
 
+case "$1" in
+	"static" | "Static" | "--static" | "--Static" )
+		printf '%s\n' "Building static pages..."
+		dioxus_cmd='build'
+		;;
+	"bundle" | "Bundle" | "--bundle" | "--Bundle" )
+		printf '%s\n' "Building bundle..."
+		dioxus_cmd='bundle'
+		;;
+	*)
+		printf '%s\n' "No selection, defaulting to static pages..."
+		dioxus_cmd='build'
+		;;
+esac
+
 if command -v 'dioxus' > /dev/null; then
 	dioxus="dixous"
 fi
@@ -22,7 +37,7 @@ if ! command -v 'wasm-opt' > /dev/null; then
 	exit
 fi
 
-dx build --features web --release
+dx "$dioxus_cmd" --bin ncsu_exam_calendar_web --release
 printf '%s\n' 'dioxus output size:'
 du -sh dist/
 

@@ -29,7 +29,7 @@ use anyhow::{anyhow, bail};
 #[cfg(feature = "web")]
 use wasm_bindgen::prelude::*;
 #[cfg(feature = "web")]
-use web_sys::{window, Request};
+use web_sys::window;
 
 use crate::calendar::Class;
 use crate::calendar::Weekday;
@@ -74,7 +74,7 @@ async fn load_default_map() -> Result<CalendarMap> {
     let src = std::fs::read_to_string(DEFAULT_JSON)?;
     // TODO: Look into fetching this from server instead
     #[cfg(target_family = "wasm")]
-    let src = { include_str!("../../public/exams.json") };
+    let src = { include_str!("../../../public/exams.json") };
 
     Ok(serde_json::from_str(&src)?)
 }

@@ -1,0 +1,18 @@
+[package]
+name = "ncsu_exam_calendar_cli"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+
+[features]
+multi-thread = ["tokio/rt-multi-thread"]
+
+[dependencies]
+ncsu_cal_lib = { path = "../ncsu_cal_lib" }
+tokio = { workspace = true }
+serde_json = { workspace = true }

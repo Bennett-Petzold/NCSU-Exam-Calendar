@@ -1,0 +1,54 @@
+[application]
+
+# App (Project) Name
+name = "ncsu_exam_calendar_web"
+
+# Dioxus App Default Platform
+# desktop, web, mobile, ssr
+default_platform = "web"
+
+# `build` & `serve` dist path
+out_dir = "dist"
+
+# resource (public) file folder
+asset_dir = "../public"
+
+[web.app]
+
+# HTML title tag content
+title = "NCSU Exam Calendar"
+
+# For GitHub pages
+#base_path = "https://bennett-petzold.github.io/NCSU-Exam-Calendar/"
+base_path = "NCSU-Exam-Calendar/"
+
+[web.watcher]
+
+# when watcher trigger, regenerate the `index.html`
+reload_html = true
+
+# which files or dirs will be watcher monitoring
+watch_path = ["src", "../public", "../ncsu_cal_lib/src"]
+
+# include `assets` in web platform
+[web.resource]
+
+# CSS style file
+
+#style = ["tailwind.css"]
+
+# Javascript code file
+script = []
+
+[web.resource.dev]
+
+# Javascript code file
+# serve: [dev-server] only
+script = []
+
+[bundle]
+name = "NCSU Grade Calculator"
+icon = ["icons/favicon-*.png"]
+copyright = "Copyright (c) Bennett Petzold 2023. GPLv2 or later."
+short_description = "A search tool for the NCSU exam calendar"
+resources = ["assets", "images/**/*.png", "secrets/public_key.txt"]

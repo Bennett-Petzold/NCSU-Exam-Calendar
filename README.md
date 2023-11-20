@@ -1,3 +1,6 @@
+![GitHub Pages](https://github.com/Bennett-Petzold/NCSU-Exam-Calendar/actions/workflows/github-pages.yml/badge.svg)
+![Clippy](https://github.com/Bennett-Petzold/NCSU-Exam-Calendar/actions/workflows/clippy.yml/badge.svg)
+
 # GitHub Pages Host
 https://bennett-petzold.github.io/NCSU-Exam-Calendar/
 
@@ -29,11 +32,15 @@ To bundle for desktop, switch the default bin from web to desktop and use `bundl
 Currently just creates the JSON that is fed into the GUI.
 Can be taken directly from target as a standalone binary.
 
-## Publishing updates
-Use `optimize.bash` for the up to date web version before merging to main (https://dioxuslabs.com/learn/0.4/cookbook/publishing).
-The release build is drastically smaller (85 MB -> 2.2 MB), which is nicer for both GitHub and users.
+## CLI builds
+Use `cargo build -p ncsu_exam_calendar_cli` to build the CLI in `target`.
 
-This runs `dioxus build --features web --release`, followed by `wasm-opt` with `-all` and `-Oz` to further shrink binary size.
+## Desktop builds
+Use `dx bundle --bin ncsu_exam_calendar_desktop --release` to build the desktop GUI package(s) in `desktop/dist/bundle`.
+If in Windows, change the icon '/' path in desktop/Dioxus.toml to '\\\\'
+
+## Web builds
+Use `web/optimize.bash` for the up to date and optimized web version (https://dioxuslabs.com/learn/0.4/cookbook/publishing).
 
 ## Graphics
 Yes, the styling is the defaults.
