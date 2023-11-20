@@ -3,8 +3,14 @@ name: release
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - '*'
   pull_request:
     branches: [ "main" ]
+  label:
+    types:
+      - created
+  workflow_call:
 
 env:
   CARGO_TERM_COLOR: always
@@ -191,7 +197,7 @@ jobs:
       windows-x86-bin-gui,
       archives
     ]
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.ref == 'refs/heads/master'
 
     steps:
     - uses: actions/download-artifact@v3
@@ -231,8 +237,14 @@ jobs:
 
     - uses: actions/checkout@v4
 
-    - uses: softprops/action-gh-release@v1
+    - id: tag_test
+      name: Test for tag
+      run: |
+        if [ -z $(git tag --points-at HEAD) ]; then exit 1; fi
+
+    - if: steps.tag_test.conclusion == 'success'
+      uses: softprops/action-gh-release@v1
       with:
         files: 'artifacts/*'
         generate_release_notes: true
-        body_path: CHANGELOG.txt
+        body_path: RELEASE.txt
