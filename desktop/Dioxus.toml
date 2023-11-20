@@ -45,3 +45,10 @@ script = []
 # Javascript code file
 # serve: [dev-server] only
 script = []
+
+[bundle]
+name = "NCSU Grade Calculator"
+icon = ["icons/icon.png"]
+copyright = "Copyright (c) Bennett Petzold 2023. GPLv2 or later."
+short_description = "A search tool for the NCSU exam calendar"
+resources = ["assets", "images/**/*.png", "secrets/public_key.txt"]

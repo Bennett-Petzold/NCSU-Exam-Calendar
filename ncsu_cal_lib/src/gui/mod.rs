@@ -29,7 +29,7 @@ use anyhow::{anyhow, bail};
 #[cfg(feature = "web")]
 use wasm_bindgen::prelude::*;
 #[cfg(feature = "web")]
-use web_sys::{window, Request};
+use web_sys::window;
 
 use crate::calendar::Class;
 use crate::calendar::Weekday;

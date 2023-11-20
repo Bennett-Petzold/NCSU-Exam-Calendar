@@ -9,6 +9,7 @@
 *
 * You should have received a copy of the GNU General Public License along with ncsu_exam_calendar. If not, see <https://www.gnu.org/licenses/>.
 */
+#![cfg_attr(feature = "bundle", windows_subsystem = "windows")]
 
 use log::LevelFilter;
 use ncsu_cal_lib::gui::app;

@@ -1,4 +1,4 @@
-name: github-pages
+name: clippy
 
 on:
   push:
@@ -29,25 +29,15 @@ jobs:
       run: |
         cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
 
-    - name: Build artifacts
-      run: |
-        web/optimize.bash
-        mv web/dist/ _site/
+    - name: Run clippy
+      run:
+        cargo clippy
+        --all-features
+        --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+      continue-on-error: true
 
-    - uses: actions/upload-pages-artifact@v2
-  deploy:
-    needs: build
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+    - name: Upload analysis results to GitHub
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: rust-clippy-results.sarif
+        wait-for-processing: true

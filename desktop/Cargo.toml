@@ -9,6 +9,9 @@ license.workspace = true
 homepage.workspace = true
 keywords.workspace = true
 
+[features]
+bundle = []
+
 [dependencies]
 ncsu_cal_lib = { path = "../ncsu_cal_lib", features = ["desktop"] }
 dioxus = { workspace = true }
