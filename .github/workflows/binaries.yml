@@ -33,7 +33,7 @@ jobs:
     - name: Build artifacts
       run: |
         cargo build -p ncsu_exam_calendar_cli --release
-        mv target/ncsu_exam_calendar_cli x86_64-linux-ncsu_examc
+        mv target/release/ncsu_exam_calendar_cli x86_64-linux-ncsu_examc
         dx bundle --bin ncsu_exam_calendar_desktop --release
 
   mac-x86-bin:
@@ -53,27 +53,7 @@ jobs:
     - name: Build artifacts
       run: |
         cargo build -p ncsu_exam_calendar_cli --release
-        mv target/ncsu_exam_calendar_cli x86_64-mac-ncsu_examc
-        dx bundle --bin ncsu_exam_calendar_desktop --release
-
-  mac-m1-bin:
-    runs-on: macos-13-xlarge
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: dtolnay/rust-toolchain@stable
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Download dependencies
-      run: |
-        brew install binaryen
-        cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
-
-    - name: Build artifacts
-      run: |
-        cargo build -p ncsu_exam_calendar_cli --release
-        mv target/ncsu_exam_calendar_cli m1-mac-ncsu_examc
+        mv target/release/ncsu_exam_calendar_cli x86_64-mac-ncsu_examc
         dx bundle --bin ncsu_exam_calendar_desktop --release
 
   windows-bin:
@@ -94,5 +74,5 @@ jobs:
     - name: Build artifacts
       run: |
         cargo build -p ncsu_exam_calendar_cli --release
-        move target\ncsu_exam_calendar_cli target\x86-windows-ncsu_examc
+        move target\release\ncsu_exam_calendar_cli target\release\x86-windows-ncsu_examc
         dx bundle --bin ncsu_exam_calendar_desktop --release
