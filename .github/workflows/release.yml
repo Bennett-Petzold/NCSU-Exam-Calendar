@@ -145,7 +145,7 @@ jobs:
       run: |
         choco install binaryen sed
         cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
-        sed -i 's;/;\\;g' desktop/Dioxus.toml # Filesystem paths...
+        sed -i 's;/;\\\\;g' desktop/Dioxus.toml # Filesystem paths...
 
     - name: Build artifacts
       run: |
@@ -169,10 +169,10 @@ jobs:
       run: |
         shopt -s extglob
         mkdir archives/
-        tar -cvjf archives/ncsu_exam_calendar.tar.xz \!(archives)
-        tar -cvzf archives/ncsu_exam_calendar.tgz \!(archives)
-        tar --zstd -cvf archives/ncsu_exam_calendar.tar.zstd \!(archives)
-        zip -r archives/ncsu_exam_calendar.zip \!(archives)
+        tar -cvjf archives/ncsu_exam_calendar.tar.xz !(archives)
+        tar -cvzf archives/ncsu_exam_calendar.tgz !(archives)
+        tar --zstd -cvf archives/ncsu_exam_calendar.tar.zstd !(archives)
+        zip -r archives/ncsu_exam_calendar.zip !(archives)
 
     - uses: actions/upload-artifact@v3
       with: 
@@ -215,16 +215,19 @@ jobs:
       with:
         name: x86_64-windows-gui
 
+    - uses: actions/download-artifact@v3
+      with:
+        name: archives
+
+    - name: Calculate checksums
+      run: |
+        sha512sum * > sums.txt
+
     - name: Move artifacts to subfolder
       run: |
         shopt -s extglob
         mkdir artifacts
-        mv \!(artifacts) artifacts
-
-    - name: Calculate checksums
-      run: |
-        cd artifacts
-        sha512sum * > sums.txt
+        mv !(artifacts) artifacts
 
     - uses: actions/checkout@v4
 
