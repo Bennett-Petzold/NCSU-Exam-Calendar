@@ -104,11 +104,11 @@ jobs:
     needs: [linux-bin, mac-x86-bin]
 
     steps:
-    - uses: dawidd6/action-download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: x86_64-linux-ncsu_examc
 
-    - uses: dawidd6/action-download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: x86_64-mac-ncsu_examc
 
