@@ -123,15 +123,13 @@ jobs:
     - name: Build artifacts
       run: |
         cargo build -p ncsu_exam_calendar_cli --release
-        #move target\release\ncsu_exam_calendar_cli x86-windows-ncsu_examc
-
-    - run: ls target/release/
+        move target\release\ncsu_exam_calendar_cli.exe x86_64-windows-ncsu_examc.exe
 
     - uses: actions/upload-artifact@v3
       with: 
         name: x86_64-windows-cli
         path: |
-          x86_64-windows-ncsu_examc
+          x86_64-windows-ncsu_examc.exe
         retention-days: 1
 
   windows-x86-bin-gui:
@@ -147,7 +145,7 @@ jobs:
       run: |
         choco install binaryen sed
         cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
-        sed -i 's;/;\\;g' desktop/Cargo.toml # Filesystem paths...
+        #sed -i 's;/;\\;g' desktop/Cargo.toml # Filesystem paths...
 
     - name: Build artifacts
       run: |
@@ -159,8 +157,6 @@ jobs:
       with: 
         name: x86_64-windows-gui
         path: |
-          desktop/dist/bundle/macos/*.app
-          desktop/dist/bundle/dmg/*.dmg
         retention-days: 1
 
   bundle:
