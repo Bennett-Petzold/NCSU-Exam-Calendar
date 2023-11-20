@@ -19,4 +19,6 @@ jobs:
 
     - name: Update tag with cargo toml
       run: |
-        git tag -m '' -a "$(cargo metadata --format-version 1 | jq '.packages.[] | select(.name == "ncsu_cal_lib")| .version' | tr -d '"')"
+        VERSION="$(cargo metadata --format-version 1 | jq '.packages.[] | select(.name == "ncsu_cal_lib")| .version' | tr -d '"')"
+        echo "$VERSION"
+        git tag -m '' -a v"$VERSION"
