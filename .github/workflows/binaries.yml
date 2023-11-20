@@ -36,7 +36,7 @@ jobs:
         mv target/release/ncsu_exam_calendar_cli x86_64-linux-ncsu_examc
         dx bundle --bin ncsu_exam_calendar_desktop --release
 
-    - uses: actions/actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with: 
         name: x86_64-linux-ncsu_examc ${{ matrix.node-version }}
         path: |
@@ -65,7 +65,7 @@ jobs:
         mv target/release/ncsu_exam_calendar_cli x86_64-mac-ncsu_examc
         dx bundle --bin ncsu_exam_calendar_desktop --release
 
-    - uses: actions/actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with: 
         name: x86_64-mac-ncsu_examc ${{ matrix.node-version }}
         path: |
