@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: dawidd6/action-download-artifact@v2
       with:
         name: x86_64-linux-ncsu_examc ${{ matrix.node-version }}
-    - uses: actions/download-artifact@v3
+    - uses: dawidd6/action-download-artifact@v2
       with:
         name: x86_64-mac-ncsu_examc ${{ matrix.node-version }}
 
