@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: dcarbone/install-jq-action@v2
+    - uses: dcarbone/install-jq-action@v2.1
       with:
         version: 1.7
 
