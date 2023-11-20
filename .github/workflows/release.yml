@@ -1,0 +1,24 @@
+name: binaries
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: .github/workflows/binaries.yml
+    - run: ls desktop/dist/bundle/*
+    - run: ls target/release/
+
+    - uses: AButler/upload-release-assets@v2.0
+      with:
+        files: 'desktop/dist/bundle/{deb/*.deb,appimage/*.AppImage}'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}

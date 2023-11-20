@@ -37,6 +37,7 @@ Use `cargo build -p ncsu_exam_calendar_cli` to build the CLI in `target`.
 
 ## Desktop builds
 Use `dx bundle --bin ncsu_exam_calendar_desktop --release` to build the desktop GUI package(s) in `desktop/dist/bundle`.
+If in Windows, change the icon '/' path in desktop/Dioxus.toml to '\\\\'
 
 ## Web builds
 Use `web/optimize.bash` for the up to date and optimized web version (https://dioxuslabs.com/learn/0.4/cookbook/publishing).
