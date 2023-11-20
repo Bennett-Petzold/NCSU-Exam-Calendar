@@ -7,19 +7,13 @@
 *
 * ncsu_exam_calendar is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 *
-* You should have received a copy of the GNU General Public License along with ncsu_exam_calendar. If not, see <https://www.gnu.org/licenses/>. 
+* You should have received a copy of the GNU General Public License along with ncsu_exam_calendar. If not, see <https://www.gnu.org/licenses/>.
 */
 
-use std::fs::File;
+use log::LevelFilter;
+use ncsu_cal_lib::gui::app;
 
-use ncsu_exam_lib::calendar::get_calendars;
-
-#[tokio::main(flavor = "current_thread")]
-async fn main() {
-    let cals = get_calendars("https://studentservices.ncsu.edu/calendars/exam-calendar/")
-        .await
-        .unwrap();
-    println!("{}", serde_json::to_string_pretty(&cals).unwrap());
-    let create = File::create("exams.json").unwrap();
-    serde_json::to_writer(create, &cals).unwrap();
+fn main() {
+    dioxus_logger::init(LevelFilter::Info).expect("failed to init logger");
+    dioxus_web::launch(app);
 }

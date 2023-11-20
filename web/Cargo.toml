@@ -1,0 +1,17 @@
+[package]
+name = "ncsu_exam_calendar_web"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+
+[dependencies]
+ncsu_cal_lib = { path = "../ncsu_cal_lib", features = ["desktop"] }
+dioxus = { workspace = true }
+dioxus-web = "0.4.0"
+dioxus-logger = { workspace = true }
+log = { workspace = true }
