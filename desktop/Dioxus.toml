@@ -19,8 +19,7 @@ asset_dir = "public"
 title = "NCSU Exam Calendar"
 
 # For GitHub pages
-#base_path = "https://bennett-petzold.github.io/NCSU-Exam-Calendar/"
-base_path = "NCSU-Exam-Calendar/"
+base_path = "NCSU-Exam-Calendar"
 
 [web.watcher]
 
