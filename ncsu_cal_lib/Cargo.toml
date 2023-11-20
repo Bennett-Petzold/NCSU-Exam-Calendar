@@ -10,7 +10,6 @@ homepage.workspace = true
 keywords.workspace = true
 
 [features]
-default = ["dioxus"]
 dioxus = ["dep:dioxus"]
 multi-thread = ["tokio/rt-multi-thread"]
 desktop = ["multi-thread", "dioxus"]

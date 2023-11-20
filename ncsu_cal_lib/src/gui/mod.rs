@@ -74,7 +74,7 @@ async fn load_default_map() -> Result<CalendarMap> {
     let src = std::fs::read_to_string(DEFAULT_JSON)?;
     // TODO: Look into fetching this from server instead
     #[cfg(target_family = "wasm")]
-    let src = { include_str!("../../public/exams.json") };
+    let src = { include_str!("../../../public/exams.json") };
 
     Ok(serde_json::from_str(&src)?)
 }

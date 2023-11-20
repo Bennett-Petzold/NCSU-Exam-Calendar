@@ -22,7 +22,7 @@ if ! command -v 'wasm-opt' > /dev/null; then
 	exit
 fi
 
-dx build --features web --release
+dx build --bin ncsu_exam_calendar_web --release
 printf '%s\n' 'dioxus output size:'
 du -sh dist/
 

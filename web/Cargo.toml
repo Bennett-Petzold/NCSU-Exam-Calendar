@@ -10,7 +10,7 @@ homepage.workspace = true
 keywords.workspace = true
 
 [dependencies]
-ncsu_cal_lib = { path = "../ncsu_cal_lib", features = ["desktop"] }
+ncsu_cal_lib = { path = "../ncsu_cal_lib", features = ["web"] }
 dioxus = { workspace = true }
 dioxus-web = "0.4.0"
 dioxus-logger = { workspace = true }
