@@ -25,9 +25,8 @@ jobs:
         target: wasm32-unknown-unknown
     - uses: Swatinem/rust-cache@v2
 
-    - name: Download dependencies
-      run: |
-        cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
+    - name: Install clippy utils
+      run: cargo install clippy-sarif sarif-fmt
 
     - name: Run clippy
       run:
