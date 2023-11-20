@@ -32,11 +32,14 @@ To bundle for desktop, switch the default bin from web to desktop and use `bundl
 Currently just creates the JSON that is fed into the GUI.
 Can be taken directly from target as a standalone binary.
 
-## Full builds
-Use `./build_all.bash` to build all binaries.
+## CLI builds
+Use `cargo build -p ncsu_exam_calendar_cli` to build the CLI in `target`.
+
+## Desktop builds
+Use `dx bundle --bin ncsu_exam_calendar_desktop --release` to build the desktop GUI package(s) in `desktop/dist/bundle`.
 
 ## Web builds
-Use `web/optimize.bash` for the up to date web version before merging to main (https://dioxuslabs.com/learn/0.4/cookbook/publishing).
+Use `web/optimize.bash` for the up to date and optimized web version (https://dioxuslabs.com/learn/0.4/cookbook/publishing).
 
 ## Graphics
 Yes, the styling is the defaults.

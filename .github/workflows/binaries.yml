@@ -65,8 +65,9 @@ jobs:
 
     - name: Download dependencies
       run: |
-        choco install binaryen
+        choco install binaryen sed
         cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
+        sed -i desktop/Cargo.toml 's;/;\\;g' # Filesystem paths...
 
     - name: Build artifacts
       run: |
