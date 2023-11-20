@@ -11,9 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: awalsh128/cache-apt-pkgs-action@v1
+    - uses: dcarbone/install-jq-action@v2
       with:
-        packages: jq
+        version: 1.7
 
     - uses: dtolnay/rust-toolchain@stable
 
@@ -22,7 +22,6 @@ jobs:
         git config --global user.name 'Tag updating bot'
         git config --global user.email 'bot@noreply.github.com'
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-        cargo metadata --format-version 1 | jq '.packages.[] | select(.name == "ncsu_cal_lib")| .version' | tr -d '"'
         VERSION="$(cargo metadata --format-version 1 | jq '.packages.[] | select(.name == "ncsu_cal_lib")| .version' | tr -d '"')"
         git tag -m '' -a v"$VERSION"
         git push origin v"$VERSION"
