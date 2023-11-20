@@ -151,12 +151,12 @@ jobs:
       run: |
         dx bundle --bin ncsu_exam_calendar_desktop --release
 
-    - run: ls desktop/dist/bundle/*
-
     - uses: actions/upload-artifact@v3
       with: 
         name: x86_64-windows-gui
         path: |
+          desktop/dist/bundle/msi/*.msi
+          desktop/dist/bundle/nsis/*.exe
         retention-days: 1
 
   archives:
