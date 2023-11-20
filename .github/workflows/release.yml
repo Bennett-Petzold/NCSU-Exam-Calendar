@@ -145,7 +145,7 @@ jobs:
       run: |
         choco install binaryen sed
         cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
-        #sed -i 's;/;\\;g' desktop/Cargo.toml # Filesystem paths...
+        sed -i 's;/;\\;g' desktop/Dioxus.toml # Filesystem paths...
 
     - name: Build artifacts
       run: |
