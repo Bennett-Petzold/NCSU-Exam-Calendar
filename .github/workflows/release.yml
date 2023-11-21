@@ -155,25 +155,6 @@ jobs:
           desktop/dist/bundle/nsis/*.exe
         retention-days: 1
 
-  archives:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Create archives
-      run: |
-        shopt -s extglob
-        mkdir archives/
-        tar -cvjf archives/ncsu_exam_calendar.tar.xz !(archives)
-        tar --zstd -cvf archives/ncsu_exam_calendar.tar.zstd !(archives)
-
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: archives
-        path: archives/*
-        retention-days: 1
-
   release_info:
     runs-on: ubuntu-latest
 
@@ -198,7 +179,6 @@ jobs:
       mac-x86-bin-gui,
       windows-x86-bin-cli,
       windows-x86-bin-gui,
-      archives,
       release_info
     ]
 
@@ -223,10 +203,6 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: x86_64-windows-gui
-
-    - uses: actions/download-artifact@v3
-      with:
-        name: archives
 
     - name: Unpack directories
       run: |
