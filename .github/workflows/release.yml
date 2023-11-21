@@ -233,12 +233,8 @@ jobs:
         mv !(artifacts) artifacts
 
     - uses: actions/checkout@v4
-
-    - name: Sanity check
-      run: |
-        ls -l
-        ls -l artifacts
-        find .
+      with:
+        clean: false
 
     - uses: softprops/action-gh-release@v1
       with:
