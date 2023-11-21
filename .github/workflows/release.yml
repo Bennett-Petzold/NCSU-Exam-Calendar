@@ -236,6 +236,6 @@ jobs:
 
     - uses: softprops/action-gh-release@v1
       with:
-        files: 'artifacts/*'
+        files: artifacts/**
         generate_release_notes: true
         body_path: RELEASE.txt
