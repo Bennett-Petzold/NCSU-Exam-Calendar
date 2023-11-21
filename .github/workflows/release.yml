@@ -229,10 +229,18 @@ jobs:
         shopt -s extglob
         mkdir artifacts
         mv !(artifacts) artifacts
+        ls -l
+        ls -l artifacts
 
     - uses: actions/checkout@v4
       with:
         clean: false
+
+    - name: Sanity check
+      run: |
+        ls -l
+        ls -l ..
+        find ..
 
     - uses: softprops/action-gh-release@v1
       with:
