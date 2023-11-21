@@ -58,7 +58,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with: 
-        name: x86_64-linux-desktop
+        name: x86_64-linux-gui
         path: |
           desktop/dist/bundle/deb/*.deb
           desktop/dist/bundle/appimage/*.AppImage,
@@ -236,6 +236,7 @@ jobs:
       name: Test for tag
       run: |
         if [ -z $(git tag --points-at HEAD) ]; then exit 1; fi
+      continue-on-error: true
 
     - if: steps.tag_test.conclusion == 'success'
       uses: softprops/action-gh-release@v1
