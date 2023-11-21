@@ -26,3 +26,5 @@ jobs:
         VERSION="$(cargo metadata --format-version 1 | jq '.packages | .[] | select(.name == "ncsu_cal_lib")| .version' | tr -d '"')"
         git tag -m '' -a v"$VERSION" || exit
         git push origin v"$VERSION"
+
+    - uses: ./.github/workflows/release.yml
