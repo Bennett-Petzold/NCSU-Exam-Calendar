@@ -166,9 +166,7 @@ jobs:
         shopt -s extglob
         mkdir archives/
         tar -cvjf archives/ncsu_exam_calendar.tar.xz !(archives)
-        tar -cvzf archives/ncsu_exam_calendar.tgz !(archives)
         tar --zstd -cvf archives/ncsu_exam_calendar.tar.zstd !(archives)
-        zip -r archives/ncsu_exam_calendar.zip !(archives)
 
     - uses: actions/upload-artifact@v3
       with: 
