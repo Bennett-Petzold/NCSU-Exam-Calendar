@@ -27,4 +27,6 @@ jobs:
         git tag -m '' -a v"$VERSION" || exit
         git push origin v"$VERSION"
 
-    - uses: ./.github/workflows/release.yml
+  trigger-tag-release:
+    needs: update-tag
+    uses: ./.github/workflows/release.yml
