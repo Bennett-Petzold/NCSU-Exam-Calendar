@@ -223,6 +223,8 @@ jobs:
     - name: Unpack directories
       run: |
         find -mindepth 1 -maxdepth 1 -type d -exec sh -c 'mv "$1"/* . && rmdir "$1"' shell {} \;
+        zip ncsu_exam_calendar_desktop.app.zip ncsu_exam_calendar_desktop.app
+        rm ncsu_exam_calendar_desktop.app
 
     - name: Calculate checksums
       run: |
