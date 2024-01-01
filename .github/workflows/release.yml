@@ -107,6 +107,59 @@ jobs:
           desktop/dist/bundle/dmg/*.dmg
         retention-days: 1
 
+  mac-arm-bin-cli:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        target: x86_64-apple-darwin
+    - uses: Swatinem/rust-cache@v2
+
+    - name: Build artifacts
+      run: |
+        cargo build --target x86_64-apple-darwin -p ncsu_exam_calendar_cli --release
+        mv target/release/ncsu_exam_calendar_cli arm-mac-ncsu_examc
+
+    - uses: actions/upload-artifact@v3
+      with: 
+        name: arm-mac-cli
+        path: |
+          arm-mac-ncsu_examc
+        retention-days: 1
+
+  mac-arm-bin-gui:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        target: arm-apple-darwin
+    - uses: Swatinem/rust-cache@v2
+
+    - name: Download dependencies
+      run: |
+        brew install binaryen
+        cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
+
+    - name: Build artifacts
+      run: |
+        mkdir -p .cargo
+        printf '[build]\ntarget = "aarch64-apple-darwin"\n' > .cargo/config
+        dx bundle --bin ncsu_exam_calendar_desktop --release
+
+    - uses: actions/upload-artifact@v3
+      with: 
+        name: arm-mac-gui
+        path: |
+          desktop/dist/bundle/macos/*.app
+          desktop/dist/bundle/dmg/*.dmg
+        retention-days: 1
+
   windows-x86-bin-cli:
     runs-on: windows-latest
 
@@ -196,6 +249,13 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: x86_64-mac-gui
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: arm-mac-cli
+    - uses: actions/download-artifact@v3
+      with:
+        name: arm-mac-gui
 
     - uses: actions/download-artifact@v3
       with:
