@@ -115,12 +115,12 @@ jobs:
 
     - uses: dtolnay/rust-toolchain@stable
       with:
-        target: x86_64-apple-darwin
+        target: aarch64-apple-darwin
     - uses: Swatinem/rust-cache@v2
 
     - name: Build artifacts
       run: |
-        cargo build --target x86_64-apple-darwin -p ncsu_exam_calendar_cli --release
+        cargo build --target aarch64-apple-darwin -p ncsu_exam_calendar_cli --release
         mv target/release/ncsu_exam_calendar_cli arm-mac-ncsu_examc
 
     - uses: actions/upload-artifact@v3
@@ -138,7 +138,7 @@ jobs:
 
     - uses: dtolnay/rust-toolchain@stable
       with:
-        target: arm-apple-darwin
+        target: aarch64-apple-darwin
     - uses: Swatinem/rust-cache@v2
 
     - name: Download dependencies
