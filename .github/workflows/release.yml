@@ -60,8 +60,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu, windows, macos]
+        arch: [x86_64]
         include:
           - os: macos
+            arch: arm
             triple: aarch64-apple-darwin
     runs-on: ${{ format('{0}-latest', matrix.os) }}
 
@@ -118,7 +120,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with: 
-        name: ${{ matrix.os }}-gui_${{ matrix.triple }}
+        name: ${{ matrix.arch }}-${{ matrix.os }}-gui
         path: |
           desktop/dist/bundle/deb/*.deb
           desktop/dist/bundle/appimage/*.AppImage
@@ -169,6 +171,7 @@ jobs:
         shopt -s extglob
         mkdir artifacts
         mv !(artifacts) artifacts
+        rm artifacts/RELEASE.txt
 
     - uses: actions/download-artifact@v3
       with:
