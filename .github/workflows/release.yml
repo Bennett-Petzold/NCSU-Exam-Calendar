@@ -26,12 +26,17 @@ jobs:
     - name: Build artifacts (cross-compile)
       if: ${{ matrix.triple }}
       run: |
-        cargo build -p ncsu_exam_calendar_cli --release --config "name=\"${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc\" " --target ${{ matrix.triple }}
+        cargo build -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc\"' --target ${{ matrix.triple }}
+
+    - name: Build artifacts (windows)
+      if: ${{ matrix.triple == null && matrix.os == 'windows' }}
+      run: |
+        cargo build -p ncsu_exam_calendar_cli --release --config "name=^"${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc^""
 
     - name: Build artifacts
-      if: ${{ matrix.triple == null }}
+      if: ${{ matrix.triple == null && matrix.os != 'windows' }}
       run: |
-        cargo build -p ncsu_exam_calendar_cli --release --config "name=\"${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc\" "
+        cargo build -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc"'
 
     - uses: actions/upload-artifact@v3
       with: 
