@@ -144,7 +144,7 @@ jobs:
     - name: Download dependencies
       run: |
         brew install binaryen
-        cargo install --git https://github.com/Bennett-Petzold/dioxus dioxus-cli
+        cargo install --git https://github.com/Bennett-Petzold/dioxus --branch cargo_passthrough dioxus-cli
 
     - name: Build artifacts
       run: |
