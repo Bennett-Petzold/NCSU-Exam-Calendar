@@ -109,12 +109,12 @@ jobs:
     - name: Build artifacts (cross-compile)
       if: ${{ matrix.triple }}
       run: |
-        dx bundle --bin ncsu_exam_calendar_desktop --release
+        dx bundle --bin ncsu_exam_calendar_desktop --release --target '${{ matrix.triple }}'
 
     - name: Build artifacts
       if: ${{ matrix.triple == null }}
       run: |
-        dx bundle --bin ncsu_exam_calendar_desktop --release --platform-triple '${{ matrix.triple }}'
+        dx bundle --bin ncsu_exam_calendar_desktop --release
 
     - uses: actions/upload-artifact@v3
       with: 
