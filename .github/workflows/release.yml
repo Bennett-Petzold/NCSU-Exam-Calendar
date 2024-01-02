@@ -26,7 +26,7 @@ jobs:
     - name: Build artifacts (cross-compile)
       if: ${{ matrix.triple }}
       run: |
-        cargo build -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc\"' --target ${{ matrix.triple }}
+        cargo build -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc"' --target ${{ matrix.triple }}
 
     - name: Build artifacts (windows)
       if: ${{ matrix.triple == null && matrix.os == 'windows' }}
@@ -50,10 +50,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu, windows, macos]
-        arch: [x86_64]
         include:
           - os: macos-latest
-            arch: arm
             triple: aarch64-apple-darwin
     runs-on: ${{ format('{0}-latest', matrix.os) }}
 
@@ -76,7 +74,10 @@ jobs:
     - name: Download dependencies (windows)
       if: ${{ matrix.os == 'windows' }}
       run: |
-        choco install binaryen sed
+        choco install sed
+        iwr -useb get.scoop.sh | iex
+        scoop bucket add main
+        scoop install main/binaryen
 
     - uses: dtolnay/rust-toolchain@stable
     - uses: Swatinem/rust-cache@v2
