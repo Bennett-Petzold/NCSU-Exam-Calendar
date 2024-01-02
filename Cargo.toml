@@ -1,5 +1,5 @@
 [workspace.package]
-version = "0.1.44"
+version = "0.1.45"
 edition = "2021"
 description = "A search tool for the NCSU exam calendar"
 
