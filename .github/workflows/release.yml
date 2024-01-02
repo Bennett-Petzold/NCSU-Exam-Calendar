@@ -228,6 +228,8 @@ jobs:
       linux-x86-bin-gui,
       mac-x86-bin-cli,
       mac-x86-bin-gui,
+      mac-arm-bin-cli,
+      mac-arm-bin-gui,
       windows-x86-bin-cli,
       windows-x86-bin-gui,
       release_info
