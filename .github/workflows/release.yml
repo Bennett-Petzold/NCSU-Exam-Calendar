@@ -84,8 +84,7 @@ jobs:
       if: ${{ matrix.os == 'windows' }}
       run: |
         choco install sed
-        Set-ExecutionPolicy RemoteSigned -scope Process -Force
-        iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+        iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
         scoop install main/binaryen
 
     - uses: dtolnay/rust-toolchain@stable
