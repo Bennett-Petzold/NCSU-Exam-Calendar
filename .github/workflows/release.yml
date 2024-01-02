@@ -77,13 +77,12 @@ jobs:
       run: |
         brew install binaryen
 
-    - uses: MinoruSekine/setup-scoop@v1
-      if: ${{ matrix.os == 'windows' }}
-
     - name: Download dependencies (windows)
       if: ${{ matrix.os == 'windows' }}
       run: |
         choco install sed
+        Set-ExecutionPolicy RemoteSigned -scope Process -Force
+        iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
         scoop install main/binaryen
 
     - uses: dtolnay/rust-toolchain@stable
