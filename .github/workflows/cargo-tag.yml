@@ -10,6 +10,15 @@ jobs:
     if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
 
     steps:
+    - name: Wait for releases to build once
+      uses: lewagon/wait-on-check-action@v1.3.1
+      with:
+        ref: ${{ github.ref }}
+        check-name: 'release'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        wait-interval: 10
+
+
     - uses: actions/checkout@v4
       with:
         token: ${{ secrets.TAG_TOKEN }}

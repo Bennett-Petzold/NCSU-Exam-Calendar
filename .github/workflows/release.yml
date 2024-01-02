@@ -155,6 +155,7 @@ jobs:
 
     steps:
     - uses: actions/download-artifact@v3
+      name: '!README.md'
 
     - name: Unpack directories
       run: |
