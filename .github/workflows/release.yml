@@ -26,27 +26,18 @@ jobs:
     - name: Build artifacts (cross-compile)
       if: ${{ matrix.triple }}
       run: |
-        cargo build --locked -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc"' --target ${{ matrix.triple }}
+        cargo build -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc"' --target ${{ matrix.triple }}
 
     - name: Build artifacts
       if: ${{ matrix.triple == null }}
       run: |
-        cargo build --locked -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc"'
+        cargo build -p ncsu_exam_calendar_cli --release --config 'name="${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc"'
 
-    - if: ${{ matrix.triple }}
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with: 
         name: ${{ matrix.arch }}-${{ matrix.os }}-cli
         path: |
           target/${{ matrix.triple }}/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
-        retention-days: 1
-
-    - if: ${{ matrix.triple == null }}
-      uses: actions/upload-artifact@v3
-      with: 
-        name: ${{ matrix.arch }}-${{ matrix.os }}-cli
-        path: |
-          target/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
         retention-days: 1
 
   linux-x86-bin-gui:
