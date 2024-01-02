@@ -12,7 +12,7 @@ jobs:
         os: [ubuntu, windows, macos]
         arch: [x86_64]
         include:
-          - os: macos-latest
+          - os: macos
             arch: arm
             triple: aarch64-apple-darwin
     runs-on: ${{ format('{0}-latest', matrix.os) }}
@@ -43,118 +43,71 @@ jobs:
         name: ${{ matrix.arch }}-${{ matrix.os }}-cli
         path: |
           target/${{ matrix.triple }}/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
+          target/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
         retention-days: 1
 
-  linux-x86-bin-gui:
-    runs-on: ubuntu-latest
+  gui-builds:
+    strategy:
+      matrix:
+        os: [ubuntu, windows, macos]
+        arch: [x86_64]
+        include:
+          - os: macos-latest
+            arch: arm
+            triple: aarch64-apple-darwin
+    runs-on: ${{ format('{0}-latest', matrix.os) }}
 
     steps:
     - uses: actions/checkout@v4
 
     - uses: awalsh128/cache-apt-pkgs-action@v1
+      if: ${{ matrix.os == 'ubuntu' }}
       with:
         packages: binaryen \
           libwebkit2gtk-4.1-dev \
           libgtk-3-dev \
           libayatana-appindicator3-dev
 
-    - uses: dtolnay/rust-toolchain@stable
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Download dependencies
-      run: |
-        cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
-
-    - name: Build artifacts
-      run: |
-        dx bundle --bin ncsu_exam_calendar_desktop --release
-
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: x86_64-linux-gui
-        path: |
-          desktop/dist/bundle/deb/*.deb
-          desktop/dist/bundle/appimage/*.AppImage,
-        retention-days: 1
-
-
-  mac-x86-bin-gui:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: dtolnay/rust-toolchain@stable
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Download dependencies
+    - name: Download dependencies (mac)
+      if: ${{ matrix.os == 'mac' }}
       run: |
         brew install binaryen
-        cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
 
-    - name: Build artifacts
-      run: |
-        dx bundle --bin ncsu_exam_calendar_desktop --release
-
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: x86_64-mac-gui
-        path: |
-          desktop/dist/bundle/macos/*.app
-          desktop/dist/bundle/dmg/*.dmg
-        retention-days: 1
-
-  mac-arm-bin-gui:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: dtolnay/rust-toolchain@stable
-      with:
-        target: aarch64-apple-darwin
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Download dependencies
-      run: |
-        brew install binaryen
-        cargo install --git https://github.com/Bennett-Petzold/dioxus --branch cargo_passthrough dioxus-cli
-
-    - name: Build artifacts
-      run: |
-        dx bundle --bin ncsu_exam_calendar_desktop --release --platform-triple aarch64-apple-darwin
-
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: arm-mac-gui
-        path: |
-          desktop/dist/bundle/macos/*.app
-          desktop/dist/bundle/dmg/*.dmg
-        retention-days: 1
-
-  windows-x86-bin-gui:
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: dtolnay/rust-toolchain@stable
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Download dependencies
+    - name: Download dependencies (windows)
+      if: ${{ matrix.os == 'windows' }}
       run: |
         choco install binaryen sed
+
+    - uses: dtolnay/rust-toolchain@stable
+    - uses: Swatinem/rust-cache@v2
+
+    - name: Download dioxus
+      run: |
         cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
+
+    - name: Fix paths (windows)
+      if: ${{ matrix.os == 'windows' }}
+      run: |
         sed -i 's;/;\\\\;g' desktop/Dioxus.toml # Filesystem paths...
 
-    - name: Build artifacts
+    - name: Build artifacts (cross-compile)
+      if: ${{ matrix.triple }}
       run: |
         dx bundle --bin ncsu_exam_calendar_desktop --release
 
+    - name: Build artifacts
+      if: ${{ matrix.triple == null }}
+      run: |
+        dx bundle --bin ncsu_exam_calendar_desktop --release --platform-triple '${{ matrix.triple }}'
+
     - uses: actions/upload-artifact@v3
       with: 
-        name: x86_64-windows-gui
+        name: ${{ matrix.arch }}-${{ matrix.os }}-cli
         path: |
+          desktop/dist/bundle/deb/*.deb
+          desktop/dist/bundle/appimage/*.AppImage
+          desktop/dist/bundle/macos/*.app
+          desktop/dist/bundle/dmg/*.dmg
           desktop/dist/bundle/msi/*.msi
           desktop/dist/bundle/nsis/*.exe
         retention-days: 1
@@ -178,30 +131,12 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     needs: [
       cli-builds,
-      linux-x86-bin-gui,
-      mac-x86-bin-gui,
-      mac-arm-bin-gui,
-      windows-x86-bin-gui,
+      gui-builds,
       release_info
     ]
 
     steps:
     - uses: actions/download-artifact@v3
-      with:
-        name: cli-builds
-
-    - uses: actions/download-artifact@v3
-      with:
-        name: x86_64-linux-gui
-    - uses: actions/download-artifact@v3
-      with:
-        name: x86_64-mac-gui
-    - uses: actions/download-artifact@v3
-      with:
-        name: arm-mac-gui
-    - uses: actions/download-artifact@v3
-      with:
-        name: x86_64-windows-gui
 
     - name: Unpack directories
       run: |
