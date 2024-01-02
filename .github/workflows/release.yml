@@ -6,8 +6,16 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  linux-x86-bin-cli:
-    runs-on: ubuntu-latest
+  cli-builds:
+    strategy:
+      matrix:
+        os: [ubuntu, windows, macos]
+        arch: [x86_64]
+        include:
+          - os: macos-latest
+            arch: arm
+            triple: aarch64-apple-darwin
+    runs-on: ${{ format('{0}-latest', matrix.os) }}
 
     steps:
     - uses: actions/checkout@v4
@@ -15,16 +23,30 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
     - uses: Swatinem/rust-cache@v2
 
-    - name: Build artifacts
+    - name: Build artifacts (cross-compile)
+      if: ${{ matrix.triple }}
       run: |
-        cargo build -p ncsu_exam_calendar_cli --release
-        mv target/release/ncsu_exam_calendar_cli x86_64-linux-ncsu_examc
+        cargo build --frozen -p ncsu_exam_calendar_cli --release --config 'name=${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc' --target ${{ matrix.triple }}
 
-    - uses: actions/upload-artifact@v3
+    - name: Build artifacts
+      if: ${{ matrix.triple == null }}
+      run: |
+        cargo build --frozen -p ncsu_exam_calendar_cli --release --config 'name=${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc'
+
+    - if: ${{ matrix.triple }}
+      uses: actions/upload-artifact@v3
       with: 
-        name: x86_64-linux-cli
+        name: ${{ matrix.arch }}-${{ matrix.os }}-cli
         path: |
-          x86_64-linux-ncsu_examc
+          target/${{ matrix.triple }}/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
+        retention-days: 1
+
+    - if: ${{ matrix.triple == null }}
+      uses: actions/upload-artifact@v3
+      with: 
+        name: ${{ matrix.arch }}-${{ matrix.os }}-cli
+        path: |
+          target/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
         retention-days: 1
 
   linux-x86-bin-gui:
@@ -60,27 +82,6 @@ jobs:
         retention-days: 1
 
 
-  mac-x86-bin-cli:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: dtolnay/rust-toolchain@stable
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Build artifacts
-      run: |
-        cargo build -p ncsu_exam_calendar_cli --release
-        mv target/release/ncsu_exam_calendar_cli x86_64-mac-ncsu_examc
-
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: x86_64-mac-cli
-        path: |
-          x86_64-mac-ncsu_examc
-        retention-days: 1
-
   mac-x86-bin-gui:
     runs-on: macos-latest
 
@@ -105,29 +106,6 @@ jobs:
         path: |
           desktop/dist/bundle/macos/*.app
           desktop/dist/bundle/dmg/*.dmg
-        retention-days: 1
-
-  mac-arm-bin-cli:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: dtolnay/rust-toolchain@stable
-      with:
-        target: aarch64-apple-darwin
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Build artifacts
-      run: |
-        cargo build --target aarch64-apple-darwin -p ncsu_exam_calendar_cli --release
-        mv target/aarch64-apple-darwin/release/ncsu_exam_calendar_cli arm-mac-ncsu_examc
-
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: arm-mac-cli
-        path: |
-          arm-mac-ncsu_examc
         retention-days: 1
 
   mac-arm-bin-gui:
@@ -156,27 +134,6 @@ jobs:
         path: |
           desktop/dist/bundle/macos/*.app
           desktop/dist/bundle/dmg/*.dmg
-        retention-days: 1
-
-  windows-x86-bin-cli:
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: dtolnay/rust-toolchain@stable
-    - uses: Swatinem/rust-cache@v2
-
-    - name: Build artifacts
-      run: |
-        cargo build -p ncsu_exam_calendar_cli --release
-        move target\release\ncsu_exam_calendar_cli.exe x86_64-windows-ncsu_examc.exe
-
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: x86_64-windows-cli
-        path: |
-          x86_64-windows-ncsu_examc.exe
         retention-days: 1
 
   windows-x86-bin-gui:
@@ -224,13 +181,10 @@ jobs:
 
     if: startsWith(github.ref, 'refs/tags/')
     needs: [
-      linux-x86-bin-cli,
+      cli-builds,
       linux-x86-bin-gui,
-      mac-x86-bin-cli,
       mac-x86-bin-gui,
-      mac-arm-bin-cli,
       mac-arm-bin-gui,
-      windows-x86-bin-cli,
       windows-x86-bin-gui,
       release_info
     ]
@@ -238,28 +192,17 @@ jobs:
     steps:
     - uses: actions/download-artifact@v3
       with:
-        name: x86_64-linux-cli
+        name: cli-builds
+
     - uses: actions/download-artifact@v3
       with:
         name: x86_64-linux-gui
-
-    - uses: actions/download-artifact@v3
-      with:
-        name: x86_64-mac-cli
     - uses: actions/download-artifact@v3
       with:
         name: x86_64-mac-gui
-
-    - uses: actions/download-artifact@v3
-      with:
-        name: arm-mac-cli
     - uses: actions/download-artifact@v3
       with:
         name: arm-mac-gui
-
-    - uses: actions/download-artifact@v3
-      with:
-        name: x86_64-windows-cli
     - uses: actions/download-artifact@v3
       with:
         name: x86_64-windows-gui
