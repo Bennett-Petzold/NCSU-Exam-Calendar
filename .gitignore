@@ -1,5 +1,4 @@
 /target
-/Cargo.lock
 /exams.json
 desktop/dist
 web/dist
