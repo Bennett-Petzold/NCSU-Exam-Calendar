@@ -2046,7 +2046,7 @@ dependencies = [
 
 [[package]]
 name = "ncsu_cal_lib"
-version = "0.1.32"
+version = "0.1.45"
 dependencies = [
  "anyhow",
  "bytes",
@@ -2073,7 +2073,7 @@ dependencies = [
 
 [[package]]
 name = "ncsu_exam_calendar_cli"
-version = "0.1.32"
+version = "0.1.45"
 dependencies = [
  "ncsu_cal_lib",
  "serde_json",
@@ -2082,7 +2082,7 @@ dependencies = [
 
 [[package]]
 name = "ncsu_exam_calendar_desktop"
-version = "0.1.32"
+version = "0.1.45"
 dependencies = [
  "dioxus 0.4.3",
  "dioxus-desktop",
@@ -2093,7 +2093,7 @@ dependencies = [
 
 [[package]]
 name = "ncsu_exam_calendar_web"
-version = "0.1.32"
+version = "0.1.45"
 dependencies = [
  "dioxus 0.4.3",
  "dioxus-logger",
