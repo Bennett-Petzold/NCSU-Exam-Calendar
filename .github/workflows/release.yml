@@ -61,7 +61,7 @@ jobs:
       matrix:
         os: [ubuntu, windows, macos]
         include:
-          - os: macos-latest
+          - os: macos
             triple: aarch64-apple-darwin
     runs-on: ${{ format('{0}-latest', matrix.os) }}
 
@@ -118,7 +118,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with: 
-        name: ${{ matrix.arch }}-${{ matrix.os }}-cli
+        name: ${{ matrix.os }}-gui_${{ matrix.triple }}
         path: |
           desktop/dist/bundle/deb/*.deb
           desktop/dist/bundle/appimage/*.AppImage
