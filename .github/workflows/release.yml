@@ -39,7 +39,7 @@ jobs:
       if: ${{ matrix.triple == null && matrix.os == 'windows' }}
       run: |
         cargo build -p ncsu_exam_calendar_cli --release
-        move target\release\ncsu_exam_calendar_cli target\release\${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
+        move target\release\ncsu_exam_calendar_cli.exe target\release\${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc.exe
 
     - name: Build artifacts
       if: ${{ matrix.triple == null && matrix.os != 'windows' }}
@@ -53,6 +53,7 @@ jobs:
         path: |
           target/${{ matrix.triple }}/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
           target/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
+          target/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc.exe
         retention-days: 1
 
   gui-builds:
