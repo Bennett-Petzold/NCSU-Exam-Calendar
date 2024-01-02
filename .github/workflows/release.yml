@@ -148,7 +148,7 @@ jobs:
 
     - name: Build artifacts
       run: |
-        dx bundle --bin ncsu_exam_calendar_desktop --release --target aarch64-apple-darwin
+        dx bundle --bin ncsu_exam_calendar_desktop --release --platform-triple aarch64-apple-darwin
 
     - uses: actions/upload-artifact@v3
       with: 
