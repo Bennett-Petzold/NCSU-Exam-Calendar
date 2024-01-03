@@ -47,7 +47,7 @@ jobs:
         cargo build -p ncsu_exam_calendar_cli --release
         mv target/release/ncsu_exam_calendar_cli target/release/${{ matrix.arch }}-${{ matrix.os }}-ncsu_examc
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with: 
         name: ${{ matrix.arch }}-${{ matrix.os }}-cli
         path: |
@@ -119,7 +119,7 @@ jobs:
       run: |
         dx bundle --bin ncsu_exam_calendar_desktop --release
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with: 
         name: ${{ matrix.arch }}-${{ matrix.os }}-gui
         path: |
@@ -138,7 +138,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with: 
         name: RELEASE.txt
         path: RELEASE.txt
@@ -161,9 +161,8 @@ jobs:
 
     - name: Unpack directories
       run: |
-        find -printf "%TY-%Tm-%Td\t%s\t%p\n" | column -t
         find -mindepth 2 -maxdepth 2 -type d -exec sh -c 'mv "$1"/* .' shell {} \;
-        zip -r ncsu_exam_calendar_desktop.app.zip ncsu_exam_calendar_desktop.app
+        find -type f -iname '*.app' -exec sh -c 'zip -r "$1".zip "$1"' shell {} \;
         find -mindepth 1 -maxdepth 1 -type d -exec sh -c 'rm -rf "$1"' shell {} \;
 
     - name: Calculate checksums
