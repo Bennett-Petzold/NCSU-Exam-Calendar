@@ -174,7 +174,6 @@ jobs:
         shopt -s extglob
         mkdir artifacts
         mv !(artifacts) artifacts
-        rm artifacts/RELEASE.txt
 
     - uses: actions/download-artifact@v3
       with:
