@@ -162,7 +162,7 @@ jobs:
     - name: Unpack directories
       run: |
         find -mindepth 2 -maxdepth 2 -type d -exec sh -c 'mv "$1"/* .' shell {} \;
-        find -type f -iname '*.app' -exec sh -c 'zip -r "$1".zip "$1"' shell {} \;
+        find -type d -iname '*.app' -exec sh -c 'zip -r "$1".zip "$1"' shell {} \;
         find -mindepth 1 -maxdepth 1 -type d -exec sh -c 'rm -rf "$1"' shell {} \;
 
     - name: Calculate checksums
