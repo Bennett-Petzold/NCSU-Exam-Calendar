@@ -112,6 +112,7 @@ jobs:
       if: ${{ matrix.triple }}
       run: |
         dx bundle --bin ncsu_exam_calendar_desktop --release --target '${{ matrix.triple }}'
+        mv 'desktop/dist/bundle/macos/ncsu_exam_calendar_desktop.app' 'desktop/dist/bundle/macos/ncsu_exam_calendar_desktop_${{ matrix.triple }}.app' || true
 
     - name: Build artifacts
       if: ${{ matrix.triple == null }}
