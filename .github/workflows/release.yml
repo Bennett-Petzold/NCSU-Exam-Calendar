@@ -155,16 +155,16 @@ jobs:
     ]
 
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         pattern: '!RELEASE.txt'
 
     - name: Unpack directories
       run: |
         find -printf "%TY-%Tm-%Td\t%s\t%p\n" | column -t
-        find -mindepth 2 -maxdepth 2 -type d -exec sh -c 'mv "$1"/* . && rmdir "$1"' shell {} \;
+        find -mindepth 2 -maxdepth 2 -type d -exec sh -c 'mv "$1"/* .' shell {} \;
         zip -r ncsu_exam_calendar_desktop.app.zip ncsu_exam_calendar_desktop.app
-        rm -rf ncsu_exam_calendar_desktop.app
+        find -mindepth 1 -maxdepth 1 -type d -exec sh -c 'rm -rf "$1"' shell {} \;
 
     - name: Calculate checksums
       run: |
