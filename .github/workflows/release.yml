@@ -99,9 +99,12 @@ jobs:
 
     - uses: Swatinem/rust-cache@v2
 
+    - name: Download binstall
+      run: cargo install cargo-binstall
+
     - name: Download dioxus
       run: |
-        cargo install --git https://github.com/DioxusLabs/dioxus dioxus-cli
+        cargo binstall --no-confirm dioxus-cli@0.4.3
 
     - name: Fix paths (windows)
       if: ${{ matrix.os == 'windows' }}
